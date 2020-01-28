@@ -1,0 +1,36 @@
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+
+  background: 0 0 / 100% no-repeat;
+
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  opacity: 0.8;
+}
+
+.icon-button.icon-button_add-folder {
+  background-image: url("../../static/images/add-folder-better.svg");
+}
+
+.icon-button.icon-button_add-file {
+  background-image: url("../../static/images/add-file.svg");
+}
+
+.icon-button.icon-button_apply {
+  background-image: url("../../static/images/apply.svg");
+}
+
+.icon-button.icon-button_cancel {
+  background-image: url("../../static/images/cancel.svg");
+}
+
+.icon-button.icon-button_delete {
+  background-image: url("../../static/images/trash.svg");
+}

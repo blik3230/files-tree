@@ -1,0 +1,85 @@
+.folder {
+}
+
+.folder__header {
+  display: flex;
+  align-items: center;
+  height: 32px;
+}
+
+.folder__header:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.folder__header:hover .folder__actions-list {
+  opacity: 1;
+}
+
+.folder__icon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  margin-right: 4px;
+
+  background: url("../../static/images/folder.svg") 0 0 / 100% no-repeat;
+}
+
+.folder__name {
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.folder__actions-list {
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.folder__actions-wrap-item {
+  margin: 0 2px;
+}
+
+.folder__toggle {
+  padding: 0 4px;
+  margin: 0 2px;
+  transition: transform 0.3s;
+}
+
+.folder__toggle.folder__toggle_open {
+  transform: rotate(180deg);
+}
+
+.folder__toggle::after {
+  content: "";
+  display: block;
+  border: 7px solid transparent;
+  border-top-color: #000;
+  border-bottom: none;
+}
+
+.folder__new-node {
+  display: flex;
+  align-items: center;
+  height: 32px;
+}
+
+.folder__new-node-field {
+  flex: 1 0 0;
+  min-width: 0;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.folder__new-node-actions {
+  display: flex;
+  align-items: center;
+}
+
+.folder__new-node-wrap-action {
+  margin: 0 3px;
+}
+
+.folder__children {
+  padding-left: 10px;
+}
