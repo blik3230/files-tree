@@ -10,7 +10,8 @@ function Folder({
   path,
   isOpen = false,
   onDeleteFolder,
-  onChangeFolder
+  onChangeFolder,
+  onRenameChildFolder
 }) {
   const { children, name, isRoot } = folder;
   const [isAddFolderMode, setAddFolderMode] = useState(false);
@@ -81,6 +82,47 @@ function Folder({
     [folder, onChangeFolder]
   );
 
+  const handleSetEditMode = useCallback(() => setIsEditFolderMode(true), []);
+  const handleCancelEditMode = useCallback(
+    () => setIsEditFolderMode(false),
+    []
+  );
+  const handleApplyChangingFolderName = useCallback(
+    editedFolderName => {
+      handleCancelEditMode();
+
+      const newFolder = {
+        ...folder,
+        name: editedFolderName
+      };
+
+      if (folder.isRoot) {
+        onChangeFolder(newFolder);
+        return;
+      }
+
+      onRenameChildFolder(folder.name, newFolder);
+    },
+    [handleCancelEditMode, onRenameChildFolder, folder, onChangeFolder]
+  );
+
+  const handleRenameChildFolder = useCallback(
+    (oldChildFolderName, newChildFolder) => {
+      const newFolder = {
+        ...folder,
+        children: {
+          ...folder.children,
+          [newChildFolder.name]: newChildFolder
+        }
+      };
+
+      delete newFolder.children[oldChildFolderName];
+
+      onChangeFolder(newFolder);
+    },
+    [folder, onChangeFolder]
+  );
+
   function renderChildren(childName, index) {
     const child = children[childName];
     if (child.type === NODE_TYPE.folder) {
@@ -91,17 +133,21 @@ function Folder({
           path={path + child.name + "/"}
           onDeleteFolder={handleDeleteChildFolder}
           onChangeFolder={handleChangeChildFolder}
+          onRenameChildFolder={handleRenameChildFolder}
         />
       );
     }
   }
 
   const childrenArr = Object.keys(children);
+  const shouldShowChildren =
+    (isFolderOpen && !!childrenArr && childrenArr.length > 0) ||
+    isAddFolderMode;
 
   return (
     <div className="folder">
       <FolderHeader
-        isEditFolderMode={isEditFolderMode}
+        isEditMode={isEditFolderMode}
         isRoot={isRoot}
         isOpen={isFolderOpen}
         isEmptyFolder={Object.keys(folder.children).length === 0}
@@ -111,18 +157,21 @@ function Folder({
         onToggle={handleToggle}
         onDeleteFolder={handleClickDeleteFolder}
         onSetEditFolderMode={() => setIsEditFolderMode(true)}
+        onSetEditMode={handleSetEditMode}
+        onCancelEditMode={handleCancelEditMode}
+        onApplyEditMode={handleApplyChangingFolderName}
       />
-      {isAddFolderMode && (
-        <NewFolderForm
-          value={value}
-          onCancel={handleCancelAddFolder}
-          onApply={handleApply}
-          onChangeValue={setValue}
-        />
-      )}
 
-      {isFolderOpen && !!childrenArr && childrenArr.length > 0 && (
+      {shouldShowChildren && (
         <div className="folder__children">
+          {isAddFolderMode && (
+            <NewFolderForm
+              value={value}
+              onCancel={handleCancelAddFolder}
+              onApply={handleApply}
+              onChangeValue={setValue}
+            />
+          )}
           {childrenArr.map(renderChildren)}
         </div>
       )}

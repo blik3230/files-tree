@@ -20,7 +20,8 @@ IconButton.propTypes = {
     "add-file",
     "apply",
     "cancel",
-    "delete"
+    "delete",
+    "rename-folder"
   ]),
   /**
    * Fire when click to button, can pass any data

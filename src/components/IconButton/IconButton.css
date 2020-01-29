@@ -34,3 +34,7 @@
 .icon-button.icon-button_delete {
   background-image: url("../../static/images/trash.svg");
 }
+
+.icon-button.icon-button_rename-folder {
+  background-image: url("../../static/images/rename.svg");
+}
