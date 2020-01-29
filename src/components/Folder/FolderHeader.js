@@ -39,15 +39,18 @@ function FolderHeader({
         />
       ) : (
         <Fragment>
-          <div className="folder__name">{name}</div>
+          <div
+            className="folder__name"
+            onDoubleClick={onSetEditMode}
+            title="Double click for edit name"
+          >
+            {name}
+          </div>
           <div className="folder__actions">
             <div className="folder__actions-toggle" />
             <div className="folder__actions-list">
               <div className="folder__actions-wrap-item">
                 <IconButton icon="add-folder" onClick={onAddFolder} />
-              </div>
-              <div className="folder__actions-wrap-item">
-                <IconButton icon="rename-folder" onClick={onSetEditMode} />
               </div>
               {!isRoot && (
                 <div className="folder__actions-wrap-item">

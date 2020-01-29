@@ -1,7 +1,8 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef, useEffect } from "react";
 import IconButton from "../IconButton/IconButton";
 
 function NewFolderForm({ value, onApply, onCancel, onChangeValue }) {
+  const inputRef = useRef(null);
   const handleChangeValue = useCallback(e => onChangeValue(e.target.value), [
     onChangeValue
   ]);
@@ -13,9 +14,12 @@ function NewFolderForm({ value, onApply, onCancel, onChangeValue }) {
     [onApply]
   );
 
+  useEffect(() => inputRef.current.focus(), []);
+
   return (
     <form className="folder__new-node" onSubmit={handleSubmit}>
       <input
+        ref={inputRef}
         className="folder__new-node-field"
         value={value}
         onChange={handleChangeValue}
